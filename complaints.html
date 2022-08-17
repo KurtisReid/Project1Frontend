@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mos Eisley complaint system</title>
+</head>
+<body>
+    <nav><a href="">Mos Eisly.empire Main Page</a></nav>
+
+    <h1>What is your complaint? </h1>
+    <h3>For damage caused by imperial personel, please fill out a fourm 51-c.328 at Empire.em</h3>
+
+    <!-- Buttons in forms cause a submission event. It automatically tries to submit the informtaion to a server. Before AJAX html forms 
+    were the only way to submit info to a server on a webpage. IT FORCES THE WEB PAGE TO REALOAD. Inputs in a form can get form validation-->
+    <form>
+
+        <fieldset>
+            <legend>Complaint info</legend>
+
+            <label for="inputComplaint">What is the nature of your complaint?</label>
+            <input id="inputComplaint" type="text" placeholder="The mayor is working too hard" required minlength="3" maxlength="40"/>
+
+
+        </fieldset>
+
+
+        <button>Submit</button>
+
+    </form>
+    
+</body>
+<script>
+    const inputComplaint = document.getElementById("inputComplaint");
+
+
+    
+    document.addEventListener("submit", async event => {
+        event.preventDefault();// will catch the submit event from the form and prevent sending an HTTP request immediately and reloading the page
+
+    
+        const complaintDesc = inputComplaint.value;
+        
+
+        /*
+            {"ComplaintID":1,"complaintDesc":"Darth vader Keeps breathing down my neck","priority":"PENDING","meetingID":-1}
+        */
+
+        const book = {"ComplaintID":1,"complaintDesc":complaintDesc,"priority":"PENDING","meetingID":-1};
+
+        // second argument is options for the fetch
+        const response = await fetch("http://localhost:8080/complaint",{
+            method:"POST", 
+            body: JSON.stringify(book),
+            headers:{
+                "Content-Type":"application/json"
+            }
+        });
+
+        if(response.status === 201){
+            alert("Your complaint has been sent. If it is of some value, it will be sent to your local dynmo.");
+            inputTitle.value = "";
+            inputAuthor.value = "";
+        }else{
+            alert("Something went wrong!");
+        }
+        
+
+    });
+
+</script>
+
+</html>

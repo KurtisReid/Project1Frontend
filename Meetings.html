@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mos Eisley Meeting scheduling system</title>
+</head>
+<body>
+    <nav><a href="">Mos Eisly.empire Main Page</a></nav>
+
+    <h1>Welcome back council</h1>
+    <h3>Just a reminder that meetings must be attended by the mayor</h3>
+
+
+    <form>
+
+        <fieldset>
+            <legend>Build your meeting</legend>
+            <select name="location" id="location">
+                <option value="city hall">City Hall</option>
+                <option value="Cantina">Cantina</option>
+                <option value="JabbasPalace">Jabbas Palace</option>
+                <option value="street">In the middle of the street</option>
+
+            </select>
+            <br />
+            <br />
+            <label for="time">Time</label>
+            <input type="datetime-local" id="time" name="time">
+            <br />
+            <br />
+            
+
+            <label for="desc">What is the nature of the meeting?</label><!-- note: in future, make this a drop down-->
+            <input id="inputDesc" type="text" placeholder="NIMBYS at it again" required minlength="3" maxlength="190"/>
+
+
+
+        </fieldset>
+
+
+        <button>Submit</button>
+
+    </form>
+    
+</body>
+<script>
+
+    const inputLocation= document.getElementById("location");
+    const inputTime = document.getElementById("time");
+    const inputDesc = document.getElementById("inputDesc");
+
+
+
+    
+    document.addEventListener("submit", async event => {
+        event.preventDefault();// will catch the submit event from the form and prevent sending an HTTP request immediately and reloading the page
+
+        const meetingLocation = inputLocation.value;
+
+        const meetingTime = inputTime.value;
+        var someDate = new Date(meetingTime);
+        someDate = someDate.getTime();
+        console.log(someDate);
+
+        const meetingDesc = inputDesc.value;
+        
+
+        /*
+            {"meetingID":1,"location":"city hall","time":1660678457,"summary":"I hate these meetings"}
+        */
+
+        const book = {"meetingID":1,"location":meetingLocation,"time":meetingTime,"summary":meetingDesc};
+
+        // second argument is options for the fetch
+        const response = await fetch("http://localhost:8080/complaint",{
+            method:"POST", 
+            body: JSON.stringify(book),
+            headers:{
+                "Content-Type":"application/json"
+            }
+        });
+
+        if(response.status === 201){
+            alert("Your complaint has been sent. If it is of some value, it will be sent to your local dynmo.");
+
+        }else{
+            alert("Something went wrong!");
+        }
+        
+
+    });
+
+</script>
+
+</html>
