@@ -25,7 +25,9 @@
         <tbody id="updateComplaintTableBody">
 
         </tbody>
+        <button id="submit">Submit</button>
     </table>
+    
         
 </body>
 
@@ -45,7 +47,7 @@
 
 
 
-    function renderUpdateTable(array)
+    function renderUpdateTable(array, nameForId)
     {
         // assume we pass in an array
         var myParent = document.body;
@@ -57,7 +59,7 @@
 
             //Create and append select list
             var selectList = document.createElement("select");
-            selectList.id = "mySelect";
+            selectList.id = nameForId;
             myParent.appendChild(selectList);
 
             //Create and append the options
@@ -83,7 +85,7 @@
     }
 
 
-    async function renderMeetTable()
+    async function renderMeetTable() //renders the dropdown of meeting IDs
     {
         const testMeetings = await getMeetings(); // make sure you await any async functions you call
         var meetingIDArray = [];
@@ -91,23 +93,15 @@
         console.log(testMeetings);
         for (const meet of testMeetings)
         {
-            //console.log(meet.id);
-            //const meetRow = document.createElement("tr");
 
-            //const meetIdData = document.createElement("td");
-            //meetIdData.innerText = meet.id;
             meetingIDArray.push(meet.id);
-            
-
-
         }
         //console.log(meetingIDArray);
 
-        renderUpdateTable(meetingIDArray);
+        renderUpdateTable(meetingIDArray, "inputMeetingId");
 
 
     }
-    ///////
 
     async function getComplaints()
     {
@@ -170,8 +164,8 @@
             
             
         }
-        renderUpdateTable(array);
-        renderUpdateTable(priorityArray);
+        renderUpdateTable(array, "inputID");
+        renderUpdateTable(priorityArray, "inputPriority");
         renderMeetTable();
         
         
@@ -186,6 +180,62 @@
 
 
     renderComplaintTable();
+
+
+
+
+
+    //user will now modify/ update the complaint by its priority, and meeting id
+
+    const submitBtn = document.getElementById("submit");
+
+    submitBtn.addEventListener("click", async event => {
+        const inputID = document.getElementById("inputID");
+        const inputPriority = document.getElementById("inputPriority");
+        const inputMeetingId = document.getElementById("inputMeetingId");
+    
+        console.log("submit button hit");
+        event.preventDefault();// will catch the submit event from the form and prevent sending an HTTP request immediately and reloading the page
+
+
+        const complaintId = inputID.options[inputID.selectedIndex].value;
+        console.log(complaintId);
+        const complaintPriority = inputPriority.options[inputPriority.selectedIndex].value;
+        const complaintMeetingID = inputMeetingId.options[inputMeetingId.selectedIndex].value;
+        console.log(complaintMeetingID);
+
+        
+
+
+
+        
+
+        /*
+            {"ComplaintID":1,"complaintDesc":"Darth vader Keeps breathing down my neck","priority":"PENDING","meetingID":-1}
+        */
+
+        const complaint = {"ComplaintID":complaintId,"complaintDesc":"if you see me, then something has gone wrong","priority":complaintPriority,"meetingID":complaintMeetingID};
+
+        // second argument is options for the fetch
+        const response = await fetch(`http://localhost:8080/complaint/${complaintId}/${complaintMeetingID}`,{
+            method:"PUT", 
+            body: JSON.stringify(complaint),
+            headers:{
+                "Content-Type":"application/json"
+            }
+        });
+
+        if(response.status === 201){
+            alert(`The complaint ${complaint} has been sent`);
+
+        }else{
+            alert("You have failed me for the last time");
+        }
+
+    });
+
+    
+
 
 </script>
 </html>
