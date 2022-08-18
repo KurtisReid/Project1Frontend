@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Complaints Viewer</h1>
+    
+    <table>
+        <thead>
+            <tr><th>ID</th><th>Desc</th><th>Priority</th><th>MeetingID</th></tr>
+        </thead>
+        <tbody id="complaintTableBody">
+
+        </tbody>
+    </table>
+    <table>
+        <tbody id="updateComplaintTableBody">
+
+        </tbody>
+
+        <form action="/action_page.php">
+            <label for="cars">Choose a car:</label>
+            <select name="cars" id="cars">
+              <option value="volvo">Volvo</option>
+              <option value="saab">Saab</option>
+              <option value="opel">Opel</option>
+              <option value="audi">Audi</option>
+            </select>
+            <br><br>
+            <input type="submit" value="Submit">
+          </form>
+</body>
+
+<script>
+    /*
+                {
+        "complaintID": 16,
+        "complaintDesc": "i exist  and i dont like it",
+        "priority": "PENDING",
+        "meetingID": 4
+    }
+        */
+
+    const complaintTableBody = document.getElementById("complaintTableBody");
+    const updateComplaintTableBody = document.getElementById("updateComplaintTableBody");
+    // fetching the data is a seperate function from rendering the data
+
+    async function getComplaints()
+    {
+        const httpResponse = await fetch("http://localhost:8080/complaint");
+        const complaints = await httpResponse.json();
+        return complaints;
+
+    }
+
+    async function renderMeetTable()
+    {
+        const testComplaints = await getComplaints(); // make sure you await any async functions you call
+        
+        //Create array of options to be added
+        var array = [];
+
+        for (const complaint of testComplaints)
+        {
+
+            const complaintRow = document.createElement("tr");
+            
+
+            const complaintIdData = document.createElement("td");
+            complaintIdData.innerText = complaint.complaintID;
+            array.push(complaint.complaintID);
+
+            
+
+            const complaintDescData = document.createElement("td");
+            complaintDescData.innerText = complaint.complaintDesc;
+
+            const complaintPriorityData = document.createElement("td");
+            complaintPriorityData.innerText = complaint.priority;
+
+            const complaintMeetingIDData = document.createElement("td");
+            complaintMeetingIDData.innerText = complaint.meetingID;
+
+            
+
+            complaintRow.appendChild(complaintIdData);
+            complaintRow.appendChild(complaintDescData);
+            complaintRow.appendChild(complaintPriorityData);
+            complaintRow.appendChild(complaintMeetingIDData);
+
+
+            complaintTableBody.appendChild(complaintRow);
+            //building id drop down for update
+
+            const complaintIDRows = document.createElement("select");
+
+            //const updateComplaintIdData = document.createElement("option");
+            //updateComplaintIdData.innerText = complaint.complaintID;
+            
+            //complaintIDRows.appendChild(updateComplaintIdData);
+            //updateComplaintTableBody.appendChild(complaintIDRows);
+
+            
+        }
+        var myParent = document.body;
+
+
+
+            //Create and append select list
+            var selectList = document.createElement("select");
+            selectList.id = "mySelect";
+            myParent.appendChild(selectList);
+
+            //Create and append the options
+            for (var i = 0; i < array.length; i++) {
+                var option = document.createElement("option");
+                option.value = array[i];
+                option.text = array[i];
+                selectList.appendChild(option);
+            }
+
+
+
+    }
+
+    renderMeetTable();
+
+</script>
+</html>
