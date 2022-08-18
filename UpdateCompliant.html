@@ -43,6 +43,8 @@
     const updateComplaintTableBody = document.getElementById("updateComplaintTableBody");
     // fetching the data is a seperate function from rendering the data
 
+
+
     function renderUpdateTable(array)
     {
         // assume we pass in an array
@@ -72,6 +74,41 @@
 
     }
 
+    async function getMeetings()
+    {
+        const httpResponse = await fetch("http://localhost:8080/meeting");
+        const meetings = await httpResponse.json();
+        return meetings;
+
+    }
+
+
+    async function renderMeetTable()
+    {
+        const testMeetings = await getMeetings(); // make sure you await any async functions you call
+        var meetingIDArray = [];
+
+        console.log(testMeetings);
+        for (const meet of testMeetings)
+        {
+            //console.log(meet.id);
+            //const meetRow = document.createElement("tr");
+
+            //const meetIdData = document.createElement("td");
+            //meetIdData.innerText = meet.id;
+            meetingIDArray.push(meet.id);
+            
+
+
+        }
+        //console.log(meetingIDArray);
+
+        renderUpdateTable(meetingIDArray);
+
+
+    }
+    ///////
+
     async function getComplaints()
     {
         const httpResponse = await fetch("http://localhost:8080/complaint");
@@ -80,14 +117,14 @@
 
     }
 
-    async function renderMeetTable()
+    async function renderComplaintTable()
     {
         const testComplaints = await getComplaints(); // make sure you await any async functions you call
         
         //Create array of options to be added
         var array = [];
         var priorityArray = ['HIGH', 'LOW', 'IGNORED', 'PENDING', 'ADDRESSED'];
-        var meetingIDArray = [];
+        
 
         for (const complaint of testComplaints)
         {
@@ -135,6 +172,12 @@
         }
         renderUpdateTable(array);
         renderUpdateTable(priorityArray);
+        renderMeetTable();
+        
+        
+
+
+
 
 
 
@@ -142,7 +185,7 @@
 
 
 
-    renderMeetTable();
+    renderComplaintTable();
 
 </script>
 </html>
