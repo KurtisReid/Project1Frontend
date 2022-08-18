@@ -18,21 +18,15 @@
         </tbody>
     </table>
     <table>
+        <br />
+        <br />
+        <h3>Pick complaint to update</h3>
+        <tr><th>ID</th><th>Desc</th><th>Priority</th><th>MeetingID</th></tr>
         <tbody id="updateComplaintTableBody">
 
         </tbody>
-
-        <form action="/action_page.php">
-            <label for="cars">Choose a car:</label>
-            <select name="cars" id="cars">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="opel">Opel</option>
-              <option value="audi">Audi</option>
-            </select>
-            <br><br>
-            <input type="submit" value="Submit">
-          </form>
+    </table>
+        
 </body>
 
 <script>
@@ -49,6 +43,35 @@
     const updateComplaintTableBody = document.getElementById("updateComplaintTableBody");
     // fetching the data is a seperate function from rendering the data
 
+    function renderUpdateTable(array)
+    {
+        // assume we pass in an array
+        var myParent = document.body;
+        const complaintRow = document.createElement("tr");
+        const complaintDescData = document.createElement("td");
+            complaintDescData.innerText = 'I am desc';
+
+
+
+            //Create and append select list
+            var selectList = document.createElement("select");
+            selectList.id = "mySelect";
+            myParent.appendChild(selectList);
+
+            //Create and append the options
+            for (var i = 0; i < array.length; i++) {
+                var option = document.createElement("option");
+                option.value = array[i];
+                option.text = array[i];
+                selectList.appendChild(option);
+            }
+            //complaintRow.appendChild(selectList);
+            myParent.appendChild(complaintDescData);
+
+
+
+    }
+
     async function getComplaints()
     {
         const httpResponse = await fetch("http://localhost:8080/complaint");
@@ -63,6 +86,8 @@
         
         //Create array of options to be added
         var array = [];
+        var priorityArray = ['HIGH', 'LOW', 'IGNORED', 'PENDING', 'ADDRESSED'];
+        var meetingIDArray = [];
 
         for (const complaint of testComplaints)
         {
@@ -81,9 +106,11 @@
 
             const complaintPriorityData = document.createElement("td");
             complaintPriorityData.innerText = complaint.priority;
+            //priorityArray.push(complaint.priority);
 
             const complaintMeetingIDData = document.createElement("td");
             complaintMeetingIDData.innerText = complaint.meetingID;
+            //meetingIDArray.push(complaint.meetingID);
 
             
 
@@ -103,29 +130,17 @@
             
             //complaintIDRows.appendChild(updateComplaintIdData);
             //updateComplaintTableBody.appendChild(complaintIDRows);
-
+            
             
         }
-        var myParent = document.body;
-
-
-
-            //Create and append select list
-            var selectList = document.createElement("select");
-            selectList.id = "mySelect";
-            myParent.appendChild(selectList);
-
-            //Create and append the options
-            for (var i = 0; i < array.length; i++) {
-                var option = document.createElement("option");
-                option.value = array[i];
-                option.text = array[i];
-                selectList.appendChild(option);
-            }
+        renderUpdateTable(array);
+        renderUpdateTable(priorityArray);
 
 
 
     }
+
+
 
     renderMeetTable();
 
