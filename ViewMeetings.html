@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Meeting Viewer</h1>
+    
+    <table>
+        <thead>
+            <tr><th>ID</th><th>Location</th><th>Time</th><th>Summary</th></tr>
+        </thead>
+        <tbody id="meetTableBody">
+
+        </tbody>
+    </table>
+</body>
+
+<script>
+    /*
+            {"meetingID":1,"location":"city hall","time":1660678457,"summary":"I hate these meetings"}
+        */
+
+    const bookTableBody = document.getElementById("meetTableBody");
+    // fetching the data is a seperate function from rendering the data
+
+    async function getMeetings()
+    {
+        const httpResponse = await fetch("http://localhost:8080/meeting");
+        const meetings = await httpResponse.json();
+        return meetings;
+
+    }
+
+    async function renderMeetTable()
+    {
+        const testMeetings = await getMeetings(); // make sure you await any async functions you call
+        
+
+
+        for (const meet of testMeetings)
+        {
+            const meetRow = document.createElement("tr");
+
+            const meetIdData = document.createElement("td");
+            meetIdData.innerText = meet.id;
+
+            const meetLocationData = document.createElement("td");
+            meetLocationData.innerText = meet.location;
+
+            const meetTimeData = document.createElement("td");
+            meetTimeData.innerText = meet.time*10000;
+
+            const meetSummaryData = document.createElement("td");
+            meetSummaryData.innerText = meet.summary;
+
+            
+
+            meetRow.appendChild(meetIdData);
+            meetRow.appendChild(meetLocationData);
+            meetRow.appendChild(meetTimeData);
+            meetRow.appendChild(meetSummaryData);
+
+
+            meetTableBody.appendChild(meetRow);
+
+        }
+
+
+    }
+
+    renderMeetTable();
+
+</script>
+</html>
