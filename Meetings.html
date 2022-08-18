@@ -63,15 +63,16 @@
 
         const meetingDesc = inputDesc.value;
         
+        
 
         /*
             {"meetingID":1,"location":"city hall","time":1660678457,"summary":"I hate these meetings"}
         */
 
-        const book = {"meetingID":1,"location":meetingLocation,"time":meetingTime,"summary":meetingDesc};
+        const book = {"meetingID":1,"location":meetingLocation,"time":(someDate/10000),"summary":meetingDesc};
 
         // second argument is options for the fetch
-        const response = await fetch("http://localhost:8080/complaint",{
+        const response = await fetch("http://localhost:8080/meeting",{
             method:"POST", 
             body: JSON.stringify(book),
             headers:{
