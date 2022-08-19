@@ -25,7 +25,7 @@
         <tbody id="updateComplaintTableBody">
 
         </tbody>
-        <button id="submit">Submit</button>
+        <!--<button id="submit">Submit</button>-->
     </table>
     
         
@@ -45,6 +45,63 @@
     const updateComplaintTableBody = document.getElementById("updateComplaintTableBody");
     // fetching the data is a seperate function from rendering the data
 
+    function listenForBtn()
+    {
+        var clickMeButton = document.createElement('button');
+        clickMeButton.id = 'submit';
+        clickMeButton.innerHTML = 'Click Me';
+        
+        document.body.appendChild(clickMeButton);
+        //user will now modify/ update the complaint by its priority, and meeting id
+
+        const submitBtn = document.getElementById("submit");
+
+        submitBtn.addEventListener("click", async event => {
+            const inputID = document.getElementById("inputID");
+            const inputPriority = document.getElementById("inputPriority");
+            const inputMeetingId = document.getElementById("inputMeetingId");
+        
+            console.log("submit button hit");
+            event.preventDefault();// will catch the submit event from the form and prevent sending an HTTP request immediately and reloading the page
+
+
+            const complaintId = inputID.options[inputID.selectedIndex].value;
+            console.log(complaintId);
+            const complaintPriority = inputPriority.options[inputPriority.selectedIndex].value;
+            const complaintMeetingID = inputMeetingId.options[inputMeetingId.selectedIndex].value;
+            console.log(complaintMeetingID);
+
+            
+
+
+
+            
+
+            /*
+                {"ComplaintID":1,"complaintDesc":"Darth vader Keeps breathing down my neck","priority":"PENDING","meetingID":-1}
+            */
+
+            const complaint = {"ComplaintID":complaintId,"complaintDesc":"if you see me, then something has gone wrong","priority":complaintPriority,"meetingID":complaintMeetingID};
+
+            // second argument is options for the fetch
+            const response = await fetch(`http://localhost:8080/complaint/${complaintId}/${complaintMeetingID}`,{
+                method:"PUT", 
+                body: JSON.stringify(complaint),
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            });
+
+            if(response.status === 201){
+                alert(`The complaint ${complaint} has been sent`);
+
+            }else{
+                alert("You have failed me for the last time");
+            }
+
+        });
+    }
+
 
 
     function renderUpdateTable(array, nameForId)
@@ -53,7 +110,8 @@
         var myParent = document.body;
         const complaintRow = document.createElement("tr");
         const complaintDescData = document.createElement("td");
-            complaintDescData.innerText = 'I am desc';
+            complaintDescData.innerText = nameForId;
+            myParent.appendChild(complaintDescData);
 
 
 
@@ -70,7 +128,8 @@
                 selectList.appendChild(option);
             }
             //complaintRow.appendChild(selectList);
-            myParent.appendChild(complaintDescData);
+            updateComplaintTableBody.appendChild(selectList);
+            
 
 
 
@@ -167,6 +226,12 @@
         renderUpdateTable(array, "inputID");
         renderUpdateTable(priorityArray, "inputPriority");
         renderMeetTable();
+
+        
+
+        listenForBtn();
+
+        
         
         
 
@@ -185,54 +250,7 @@
 
 
 
-    //user will now modify/ update the complaint by its priority, and meeting id
-
-    const submitBtn = document.getElementById("submit");
-
-    submitBtn.addEventListener("click", async event => {
-        const inputID = document.getElementById("inputID");
-        const inputPriority = document.getElementById("inputPriority");
-        const inputMeetingId = document.getElementById("inputMeetingId");
     
-        console.log("submit button hit");
-        event.preventDefault();// will catch the submit event from the form and prevent sending an HTTP request immediately and reloading the page
-
-
-        const complaintId = inputID.options[inputID.selectedIndex].value;
-        console.log(complaintId);
-        const complaintPriority = inputPriority.options[inputPriority.selectedIndex].value;
-        const complaintMeetingID = inputMeetingId.options[inputMeetingId.selectedIndex].value;
-        console.log(complaintMeetingID);
-
-        
-
-
-
-        
-
-        /*
-            {"ComplaintID":1,"complaintDesc":"Darth vader Keeps breathing down my neck","priority":"PENDING","meetingID":-1}
-        */
-
-        const complaint = {"ComplaintID":complaintId,"complaintDesc":"if you see me, then something has gone wrong","priority":complaintPriority,"meetingID":complaintMeetingID};
-
-        // second argument is options for the fetch
-        const response = await fetch(`http://localhost:8080/complaint/${complaintId}/${complaintMeetingID}`,{
-            method:"PUT", 
-            body: JSON.stringify(complaint),
-            headers:{
-                "Content-Type":"application/json"
-            }
-        });
-
-        if(response.status === 201){
-            alert(`The complaint ${complaint} has been sent`);
-
-        }else{
-            alert("You have failed me for the last time");
-        }
-
-    });
 
     
 
