@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+h1{font-family: "Lato", sans-serif; color:aliceblue}
+p{color:white}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+.bgimg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("https://static.wikia.nocookie.net/starwars/images/e/e6/MosEisley-celebration.png/revision/latest?cb=20130420052326");
+  min-height: 90%;
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+    <div class="w3-bar w3-red w3-card w3-left-align w3-large">
+        <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+        <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">See Compliants</a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">See Meetings</a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Employee Login</a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 4</a>
+      </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">See Compliants</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">See Meetings</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Employee Login</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 4</a>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="bgimg w3-display-container w3-grayscale-min" style="padding:128px 16px">
+  <h1 class="w3-margin w3-jumbo" >Meeting Builder</h1>
+  <p class="w3-xlarge">Employee view</p>
+
+  
+</header>
+
+<!-- First Grid -->
+<div class="w3-row-padding w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-twothird">
+        <h1>Welcome back council</h1>
+        <h3>Just a reminder that meetings must be attended by the mayor</h3>
+
+
+    <form>
+
+        <fieldset>
+            <legend>Build your meeting</legend>
+            <select name="location" id="location">
+                <option value="city hall">City Hall</option>
+                <option value="Cantina">Cantina</option>
+                <option value="JabbasPalace">Jabbas Palace</option>
+                <option value="street">In the middle of the street</option>
+
+            </select>
+            <br />
+            <br />
+            <label for="time">Time</label>
+            <input type="datetime-local" id="time" name="time">
+            <br />
+            <br />
+            
+
+            <label for="desc">What is the nature of the meeting?</label><!-- note: in future, make this a drop down-->
+            <input id="inputDesc" type="text" placeholder="NIMBYS at it again" required minlength="3" maxlength="190"/>
+
+
+
+        </fieldset>
+
+
+        <button>Submit</button>
+
+
+  </div>
+</div>
+
+<!-- Second Grid -->
+<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
+  <div class="w3-content">
+    
+  </div>
+</div>
+
+<div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
+    <h1 class="w3-margin w3-xlarge">Quote of the day: Bow before Jabba</h1>
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity">  
+  <div class="w3-xlarge w3-padding-32">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+ </div>
+ <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>
+
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+const inputLocation= document.getElementById("location");
+    const inputTime = document.getElementById("time");
+    const inputDesc = document.getElementById("inputDesc");
+
+
+
+    
+    document.addEventListener("submit", async event => {
+        event.preventDefault();// will catch the submit event from the form and prevent sending an HTTP request immediately and reloading the page
+
+        const meetingLocation = inputLocation.value;
+
+        const meetingTime = inputTime.value;
+        var someDate = new Date(meetingTime);
+        someDate = someDate.getTime();
+        console.log(someDate);
+
+        const meetingDesc = inputDesc.value;
+        
+        
+
+        /*
+            {"meetingID":1,"location":"city hall","time":1660678457,"summary":"I hate these meetings"}
+        */
+
+        const book = {"meetingID":1,"location":meetingLocation,"time":(someDate/10000),"summary":meetingDesc};
+
+        // second argument is options for the fetch
+        const response = await fetch("http://localhost:8080/meeting",{
+            method:"POST", 
+            body: JSON.stringify(book),
+            headers:{
+                "Content-Type":"application/json"
+            }
+        });
+
+        if(response.status === 201){
+            alert("Your complaint has been sent. If it is of some value, it will be sent to your local dynmo.");
+
+        }else{
+            alert("Something went wrong!");
+        }
+        
+
+    });
+
+</script>
+
+</body>
+</html>
