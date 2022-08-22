@@ -130,7 +130,7 @@ function myFunction() {
             meetLocationData.innerText = meet.location;
 
             const meetTimeData = document.createElement("td");
-            var myDate = new Date( meet.time*1000);
+            var myDate = new Date( meet.time*10000);
             
             meetTimeData.innerText = myDate.toGMTString()+"<hr>"+myDate.toLocaleString();
 
