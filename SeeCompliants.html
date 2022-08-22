@@ -28,11 +28,11 @@ p{color:white}
 <div class="w3-top">
     <div class="w3-bar w3-red w3-card w3-left-align w3-large">
         <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-        <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">See Compliants</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">See Meetings</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Employee Login</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 4</a>
+        <a href="index.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+        <a href="SeeCompliants.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">See Compliants</a>
+        <a href="EmployeeSeeMeetings.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">See Meetings</a>
+        <a href="UpdateMeetings.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Update Meetings</a>
+        <a href="index.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Submit a complaint</a>
       </div>
 
   <!-- Navbar on small screens -->
@@ -151,6 +151,7 @@ function myFunction() {
             const complaintId = inputID.options[inputID.selectedIndex].value;
             console.log(complaintId);
             const complaintPriority = inputPriority.options[inputPriority.selectedIndex].value;
+            console.log(inputPriority.options[inputPriority.selectedIndex].value);
             const complaintMeetingID = inputMeetingId.options[inputMeetingId.selectedIndex].value;
             console.log(complaintMeetingID);
 
@@ -165,7 +166,7 @@ function myFunction() {
             */
 
             const complaint = {"ComplaintID":complaintId,"complaintDesc":"if you see me, then something has gone wrong","priority":complaintPriority,"meetingID":complaintMeetingID};
-
+            console.log(complaint);
             // second argument is options for the fetch
             const response = await fetch(`http://localhost:8080/complaint/${complaintId}/${complaintMeetingID}`,{
                 method:"PUT", 
