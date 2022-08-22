@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>W3.CSS Template</title>
+<title>See Complaints</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -9,7 +9,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+body,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+h1{font-family: "Lato", sans-serif; color:aliceblue}
+p{color:white}
 .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
 .fa-anchor,.fa-coffee {font-size:200px}
 .bgimg {
@@ -44,7 +46,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
 <!-- Header -->
 <header class="bgimg w3-display-container w3-grayscale-min" style="padding:128px 16px">
-  <h1 class="w3-margin w3-jumbo">Complaints Page</h1>
+  <h1 class="w3-margin w3-jumbo" >Complaints Page</h1>
   <p class="w3-xlarge">Employees only</p>
 
   
@@ -54,8 +56,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-row-padding w3-padding-64 w3-container">
   <div class="w3-content">
     <div class="w3-twothird">
-      <h1>Lodged complaints</h1>
-      <table>
+      <h2>Lodged complaints</h2>
+      <table aria-label="List of compliants">
         <thead>
             <tr><th>ID</th><th>Desc</th><th>Priority</th><th>MeetingID</th></tr>
         </thead>
@@ -63,7 +65,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
         </tbody>
     </table>
-    <table>
+    <table aria-label="Pick complaint to update">
         <br />
         <br />
         <h3>Pick complaint to update</h3>
