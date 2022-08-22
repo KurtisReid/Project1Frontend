@@ -132,7 +132,7 @@ function myFunction() {
             const meetTimeData = document.createElement("td");
             var myDate = new Date( meet.time*10000);
             
-            meetTimeData.innerText = myDate.toGMTString()+"<hr>"+myDate.toLocaleString();
+            meetTimeData.innerText = myDate.toGMTString();
 
             const meetSummaryData = document.createElement("td");
             meetSummaryData.innerText = meet.summary;
